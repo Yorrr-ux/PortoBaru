@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <script>
       tailwind.config = {
         theme: {
@@ -70,29 +69,6 @@
       .thumb .ph-mark {
         transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
       }
-      .tab {
-        position: relative;
-        color: #a1a1aa;
-        transition: color 0.25s;
-      }
-      .tab:hover,
-      .tab[aria-selected='true'] {
-        color: #fafafa;
-      }
-      .tab::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -1px;
-        height: 1px;
-        background: #fafafa;
-        transform: scaleX(0);
-        transition: transform 0.3s;
-      }
-      .tab[aria-selected='true']::after {
-        transform: scaleX(1);
-      }
       .fade-in {
         animation: fade 0.5s ease both;
       }
@@ -105,22 +81,6 @@
           opacity: 1;
           transform: none;
         }
-      }
-      #modal {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
-      }
-      #modal.open {
-        opacity: 1;
-        pointer-events: auto;
-      }
-      #modal .panel {
-        transform: translateY(16px) scale(0.98);
-        transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
-      }
-      #modal.open .panel {
-        transform: none;
       }
       @media (prefers-reduced-motion: reduce) {
         * {
@@ -166,19 +126,10 @@
           <div class="relative mx-auto w-full max-w-[300px] lg:max-w-[340px] lg:justify-self-end">
             <div class="glass group relative aspect-[6/9] overflow-hidden rounded-2xl p-2">
               <div class="relative h-full w-full overflow-hidden rounded-xl bg-card">
-                <!-- Fallback silhouette: visible until your photo loads -->
                 <svg class="absolute inset-0 h-full w-full text-line" viewBox="0 0 120 180" fill="currentColor" aria-hidden="true">
                   <circle cx="60" cy="68" r="22" />
                   <path d="M16 180c0-34 20-54 44-54s44 20 44 54z" />
                 </svg>
-                <!--
-            ============================================================
-            INSERT YOUR PHOTO HERE
-            Put your file (e.g. foto-saya.jpg) in the same folder as this
-            HTML file. The src below already points to it. Best results
-            with a portrait photo at 6:9 ratio (e.g. 1200 x 1800 px).
-            ============================================================
-          -->
                 <img
                   src="images/Yori.jpeg"
                   alt="Portrait of Yorianmar Rahagi"
@@ -222,13 +173,12 @@
 
       <!-- WORK -->
       <section id="work" class="mx-auto max-w-6xl border-t border-line px-6 py-28">
-        <div class="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Selected Projects</h2>
-          <div role="tablist" aria-label="Filter projects" class="flex gap-7 border-b border-line text-sm font-medium" id="tabs">
-            <button role="tab" class="tab pb-3" data-f="all" aria-selected="true">All</button>
-            <button role="tab" class="tab pb-3" data-f="asset" aria-selected="false">3D Assets</button>
-            <button role="tab" class="tab pb-3" data-f="game" aria-selected="false">Game Projects</button>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Selected Game Projects</h2>
+            <p class="mt-2 text-sm text-mute">Click on any project to view my contributions and 3D assets.</p>
           </div>
+          <span id="project-count" class="text-sm text-mute">6 Projects</span>
         </div>
         <div id="grid" class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
       </section>
@@ -239,7 +189,6 @@
         <div class="mt-10 flex flex-wrap gap-3">
           <a href="mailto:yoriraha06@gmail.com" class="rounded-full bg-snow px-6 py-3 text-sm font-semibold text-ink transition hover:bg-mute">yoriraha06@gmail.com</a>
           <a href="https://github.com/Yorrr-ux" target="_blank" rel="noopener" class="hair rounded-full px-6 py-3 text-sm font-semibold transition hover:border-snow">GitHub</a>
-          <!-- Replace with your real Behance profile URL -->
         </div>
       </section>
     </main>
@@ -251,243 +200,53 @@
         <div class="flex gap-6">
           <a class="transition hover:text-snow" href="https://github.com/Yorrr-ux" target="_blank" rel="noopener">GitHub</a>
           <a class="transition hover:text-snow" href="mailto:yoriraha06@gmail.com">Email</a>
-          <a class="transition hover:text-snow" href="https://www.behance.net/yourname" target="_blank" rel="noopener"></a>
         </div>
       </div>
     </footer>
 
-    <!-- MODAL -->
-    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="m-title">
-      <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" data-close></div>
-      <div class="panel glass relative w-full max-w-2xl overflow-hidden rounded-2xl bg-card">
-        <button data-close id="m-close" aria-label="Close details" class="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full bg-ink/70 hair text-lg transition hover:border-snow">&times;</button>
-        <div id="m-thumb" class="thumb relative aspect-[16/9] w-full overflow-hidden border-b border-line"></div>
-        <div class="p-7">
-          <p id="m-cat" class="text-xs text-mute"></p>
-          <h3 id="m-title" class="mt-1 text-2xl font-bold tracking-tight"></h3>
-          <p id="m-desc" class="mt-4 leading-relaxed text-mute"></p>
-          <ul id="m-tags" class="mt-6 flex flex-wrap gap-2"></ul>
-          <div id="m-action" class="mt-7 hidden border-t border-line pt-6">
-            <a id="m-link" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-snow px-6 py-2.5 text-sm font-semibold text-ink transition hover:bg-mute">
-              Play on itch.io <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <!-- Load database terpusat dari projects-data.js -->
+    <script src="projects-data.js"></script>
     <script>
-      /* ================= PROJECT DATA =================
-   THUMBNAILS: to use a real image, set `img` to its path, e.g.
-   img: 'images/character.jpg'. Leave '' to show the placeholder.
-   Recommended size: 1280 x 720 px (16:9), JPG/WebP.
-
-   ITCH.IO LINKS: For Game Projects (`cat: 'game'`), fill `itch` with
-   your game's itch.io URL. Leave '' on 3D Assets so the button stays hidden.
-*/
-      const works = [
-        {
-            title: 'Character',
-            cat: 'asset',
-            summary: 'Game-ready prop, hand-painted textures.',
-            desc: 'A stylized treasure chest modeled in Blender with clean topology, a single optimized texture atlas and hand-painted detail, ready to drop into Unity.',
-            tags: ['Blender', 'Hand-painted', 'PBR-lite'],
-            img: 'images/character.png', // Gambar thumbnail untuk kartu depan
-            glb: 'assets/character.glb', // File 3D untuk di-inspect di modal
-            itch: '',
-        },
-        {
-            title: 'Environtment Paperbol',
-            cat: 'asset',
-            summary: 'Game-ready prop, hand-painted textures.',
-            desc: 'A stylized treasure chest modeled in Blender with clean topology, a single optimized texture atlas and hand-painted detail, ready to drop into Unity.',
-            tags: ['Blender', 'Hand-painted', 'PBR-lite'],
-            img: 'images/kelas.png', // Gambar thumbnail untuk kartu depan
-            glb: 'assets/kelas.glb', // File 3D untuk di-inspect di modal
-            itch: '',
-        },
-         {
-            title: 'Food',
-            cat: 'asset',
-            summary: 'Game-ready prop, hand-painted textures.',
-            desc: 'A stylized treasure chest modeled in Blender with clean topology, a single optimized texture atlas and hand-painted detail, ready to drop into Unity.',
-            tags: ['Blender', 'Hand-painted', 'PBR-lite'],
-            img: 'images/food.png', // Gambar thumbnail untuk kartu depan
-            glb: 'assets/food.glb', // File 3D untuk di-inspect di modal
-            itch: '',
-        },
-        {
-            title: 'Sumur',
-            cat: 'asset',
-            summary: 'Game-ready prop, hand-painted textures.',
-            desc: 'A stylized treasure chest modeled in Blender with clean topology, a single optimized texture atlas and hand-painted detail, ready to drop into Unity.',
-            tags: ['Blender', 'Hand-painted', 'PBR-lite'],
-            img: 'images/sumur.png', // Gambar thumbnail untuk kartu depan
-            glb: 'assets/sumur.glb', // File 3D untuk di-inspect di modal
-            itch: '',
-        },
-       {
-            title: 'Map 2 Just Drive Bro!',
-            cat: 'asset',
-            summary: 'Game-ready prop, hand-painted textures.',
-            desc: 'A stylized treasure chest modeled in Blender with clean topology, a single optimized texture atlas and hand-painted detail, ready to drop into Unity.',
-            tags: ['Blender', 'Hand-painted', 'PBR-lite'],
-            img: 'images/track.png', // Gambar thumbnail untuk kartu depan
-            glb: 'assets/track.glb', // File 3D untuk di-inspect di modal
-            itch: '',
-        },
-        {
-            title: 'NPC Character Thrift Shop',
-            cat: 'asset',
-            summary: 'Game-ready prop, hand-painted textures.',
-            desc: 'A stylized treasure chest modeled in Blender with clean topology, a single optimized texture atlas and hand-painted detail, ready to drop into Unity.',
-            tags: ['Blender', 'Hand-painted', 'PBR-lite'],
-            img: 'images/character_ts.png', // Gambar thumbnail untuk kartu depan
-            glb: 'assets/character_ts.glb', // File 3D untuk di-inspect di modal
-            itch: '',
-        },
-        {
-            title: 'Box',
-            cat: 'asset',
-            summary: 'Game-ready prop, hand-painted textures.',
-            desc: 'A stylized treasure chest modeled in Blender with clean topology, a single optimized texture atlas and hand-painted detail, ready to drop into Unity.',
-            tags: ['Blender', 'Hand-painted', 'PBR-lite'],
-            img: 'images/BOX_baru.png', // Gambar thumbnail untuk kartu depan
-            glb: 'assets/box.glb', // File 3D untuk di-inspect di modal
-            itch: '',
-        },
-        {
-          title: 'Just Drive Bro!',
-          cat: 'game',
-          summary: 'Multiplayer platformer with Mirror networking.',
-          desc: 'A cooperative 3D platformer where two players solve puzzles together. Networked with Mirror, with synced player state, shared objectives and custom stylized assets.',
-          tags: ['Unity', 'C#', 'Mirror', 'Netcode'],
-          img: 'images/just-drive-bro.png',
-          itch: 'https://corneliuz.itch.io/just-drive-bro' /* <-- GANTI DENGAN LINK ITCH.IO GAME INI */,
-        },
-        {
-          title: 'Paperbol',
-          cat: 'game',
-          summary: 'Custom shaders built in Shader Graph.',
-          desc: 'A set of Shader Graph effects, including stylized water with foam, a dissolve effect and rim lighting, tuned to run well on modest hardware.',
-          tags: ['Shader Graph', 'Unity', 'VFX'],
-          img: 'images/paperbol.png',
-          itch: 'https://corneliuz.itch.io/paperbol' /* <-- GANTI DENGAN LINK ITCH.IO GAME INI */,
-        },
-        {
-          title: 'Trust Fall',
-          cat: 'game',
-          summary: 'Node.js backend with a Unity client.',
-          desc: 'A small Node.js service handling lobbies and score tracking, connected to a Unity client. Designed in Figma first, then implemented.',
-          tags: ['Node.js', 'Unity', 'Figma', 'REST'],
-          img: 'images/trust_fall.jpeg' ,
-          itch: 'https://nixonnn.itch.io/trust-fall' /* <-- GANTI DENGAN LINK ITCH.IO GAME INI */,
-        },
-        {
-          title: 'Thift Shop',
-          cat: 'game',
-          summary: 'Node.js backend with a Unity client.',
-          desc: 'A small Node.js service handling lobbies and score tracking, connected to a Unity client. Designed in Figma first, then implemented.',
-          tags: ['Node.js', 'Unity', 'Figma', 'REST'],
-          img: 'images/thrift-shop.png',
-          itch: 'https://shabrijal.itch.io/thriftshop' /* <-- GANTI DENGAN LINK ITCH.IO GAME INI */,
-        },
-        {
-          title: 'GrowBack',
-          cat: 'game',
-          summary: 'Node.js backend with a Unity client.',
-          desc: 'A small Node.js service handling lobbies and score tracking, connected to a Unity client. Designed in Figma first, then implemented.',
-          tags: ['Node.js', 'Unity', 'Figma', 'REST'],
-          img: '' /* <-- REPLACE: 'images/growback.jpg' */,
-          itch: 'https://phamyorr.itch.io/growback' /* <-- GANTI DENGAN LINK ITCH.IO GAME INI */,
-        },
-      ];
-      const catName = { asset: '3D Asset', game: 'Game Project' };
-
       const $ = (s, r = document) => r.querySelector(s);
-      const grid = $('#grid'),
-        modal = $('#modal');
-      let lastFocus = null;
+      const grid = $('#grid');
+      const countLabel = $('#project-count');
 
       const thumb = (w) =>
         w.img
           ? `<img src="${w.img}" alt="${w.title}" loading="lazy" class="absolute inset-0 h-full w-full object-cover">`
           : `<div class="thumb-ph ph-mark absolute inset-0 grid place-items-center"><span class="hair rounded-full bg-ink/70 px-4 py-1.5 text-xs text-mute">${w.title}</span></div>`;
 
-      function render(filter = 'all') {
-        const list = works.filter((w) => filter === 'all' || w.cat === filter);
-        grid.innerHTML = list
-          .map((w) => {
-            const i = works.indexOf(w);
-            return `<article class="card-w fade-in hair overflow-hidden rounded-2xl bg-card">
-      <div class="thumb relative aspect-[4/3] overflow-hidden border-b border-line">${thumb(w)}</div>
-      <div class="p-6">
-        <p class="text-xs text-mute">${catName[w.cat]}</p>
-        <h3 class="mt-1 text-lg font-semibold">${w.title}</h3>
-        <p class="mt-2 text-sm leading-relaxed text-mute">${w.summary}</p>
-        <button data-open="${i}" class="hair mt-5 rounded-full px-4 py-2 text-sm font-medium transition hover:border-snow hover:bg-snow hover:text-ink">Details</button>
-      </div></article>`;
-          })
+      function renderGames() {
+        if (typeof gamesData === 'undefined') return;
+        countLabel.textContent = `${gamesData.length} Projects`;
+
+        grid.innerHTML = gamesData
+          .map(
+            (g) => `
+            <article class="card-w fade-in hair flex flex-col justify-between overflow-hidden rounded-2xl bg-card">
+              <div>
+                <a href="game.html?id=${g.id}" class="thumb relative block aspect-[4/3] overflow-hidden border-b border-line">
+                  ${thumb(g)}
+                </a>
+                <div class="p-6 pb-0">
+                  <p class="text-xs text-mute">${g.role}</p>
+                  <h3 class="mt-1 text-lg font-semibold">
+                    <a href="game.html?id=${g.id}" class="transition hover:text-mute">${g.title}</a>
+                  </h3>
+                  <p class="mt-2 text-sm leading-relaxed text-mute">${g.summary}</p>
+                </div>
+              </div>
+              <div class="p-6 pt-5">
+                <a href="game.html?id=${g.id}" class="hair inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition hover:border-snow hover:bg-snow hover:text-ink">
+                  View Project <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>`,
+          )
           .join('');
       }
 
-      $('#tabs').addEventListener('click', (e) => {
-        const b = e.target.closest('.tab');
-        if (!b) return;
-        document.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', t === b));
-        render(b.dataset.f);
-      });
-
-      grid.addEventListener('click', (e) => {
-        const b = e.target.closest('[data-open]');
-        if (!b) return;
-        const w = works[+b.dataset.open];
-        lastFocus = b;
-        if (w.glb) {
-        $('#m-thumb').innerHTML = `
-            <model-viewer
-            src="${w.glb}"
-            alt="${w.title}"
-            camera-controls
-            auto-rotate
-            shadow-intensity="1"
-            touch-action="pan-y"
-            class="h-full w-full bg-[#0c0c0e]">
-            </model-viewer>`;
-        } else {
-        $('#m-thumb').innerHTML = thumb(w);
-        }
-        $('#m-cat').textContent = catName[w.cat];
-        $('#m-title').textContent = w.title;
-        $('#m-desc').textContent = w.desc;
-        $('#m-tags').innerHTML = w.tags.map((t) => `<li class="hair rounded-full px-3 py-1 text-xs text-mute">${t}</li>`).join('');
-
-        const actionBox = $('#m-action');
-        if (w.itch) {
-          $('#m-link').href = w.itch;
-          actionBox.classList.remove('hidden');
-        } else {
-          actionBox.classList.add('hidden');
-        }
-
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        $('#m-close').focus();
-      });
-
-      function closeModal() {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-        if (lastFocus) lastFocus.focus();
-      }
-      modal.addEventListener('click', (e) => {
-        if (e.target.closest('[data-close]')) closeModal();
-      });
-      addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-      });
-
-      render();
+      renderGames();
 
       /* ================= HERO CANVAS: dot grid that repels & lights up near the cursor ================= */
       (() => {
@@ -521,7 +280,6 @@
         function draw() {
           ctx.clearRect(0, 0, W, H);
           if (m.tx > -9000) {
-            // soft spotlight
             const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, RADIUS * 1.6);
             g.addColorStop(0, 'rgba(250,250,250,.07)');
             g.addColorStop(1, 'rgba(250,250,250,0)');
@@ -560,7 +318,7 @@
         function loop() {
           if (!running) return;
           m.x += (m.tx - m.x) * 0.12;
-          m.y += (m.ty - m.y) * 0.12; // smooth follow
+          m.y += (m.ty - m.y) * 0.12;
           draw();
           requestAnimationFrame(loop);
         }
@@ -590,4 +348,4 @@
       })();
     </script>
   </body>
-</html
+</html>
