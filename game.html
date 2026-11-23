@@ -168,24 +168,7 @@
             </div>
           </div>
 
-          <!-- BAGIAN 2: APA SAJA YANG SAYA KERJAKAN (CONTRIBUTIONS) -->
-          <section class="mt-16 rounded-2xl hair bg-card p-7 sm:p-10">
-            <p class="text-xs uppercase tracking-wider text-mute">Role &amp; Responsibilities</p>
-            <h2 class="mt-1 text-2xl font-bold tracking-tight">What I Worked On</h2>
-            <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              ${game.contributions
-                .map(
-                  (item, idx) => `
-                <li class="rounded-xl border border-line bg-ink/60 p-5">
-                  <span class="text-xs font-bold text-mute">0${idx + 1}</span>
-                  <p class="mt-2 text-sm leading-relaxed text-snow/90">${item}</p>
-                </li>`,
-                )
-                .join('')}
-            </ul>
-          </section>
-
-          <!-- BAGIAN 3: 3D ASSETS YANG DIKERJAKAN DI GAME INI -->
+          <!-- BAGIAN 2: 3D ASSETS YANG DIKERJAKAN DI GAME INI -->
           <section class="mt-20 border-t border-line pt-16">
             <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
               <div>
